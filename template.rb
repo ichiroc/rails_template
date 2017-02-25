@@ -63,12 +63,9 @@ inject_into_file 'spec/rails_helper.rb', before: "\nend\n" do
   "\n  config.include FactoryGirl::Syntax::Methods\n"
 end
 if has_user
-  # for devise
   generate 'devise:install'
   environment %q(config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }), env: 'development'
   generate "devise #{devise_model} #{devise_model_options}" if devise_model
-
-  # for pundit
   generate 'pundit:install'
   generate "rolify Role #{devise_model}"
 end
@@ -83,9 +80,3 @@ environment 'config.action_mailer.delivery_method = :letter_opener', env: 'devel
 
 remove_file '.gitignore'
 get 'https://www.gitignore.io/api/rails%2Cmacos%2Cemacs', '.gitignore'
-
-# after_bundle do
-#   git :init
-#   git add: '.'
-#   git commit: %q(-a -m 'Initial commit')
-# end
