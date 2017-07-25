@@ -44,7 +44,7 @@ end
 # Because it will fail install, skip these gems if it run on Windows.
 unless windows?
   gem 'therubyracer'
-  gem 'less-rails'
+  gem 'sass-rails'
 end
 
 run 'bundle install'
