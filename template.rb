@@ -32,6 +32,7 @@ gem_group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem "font-awesome-rails"
   gem 'guard-rspec'
   gem 'launchy'
   gem 'letter_opener'
