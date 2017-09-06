@@ -97,4 +97,4 @@ run 'rm Gemfile.lock.backup'
 environment 'config.action_mailer.delivery_method = :letter_opener', env: 'development'
 
 remove_file '.gitignore'
-get 'https://www.gitignore.io/api/rails%2Cmacos%2Cemacs', '.gitignore'
+get 'https://www.gitignore.io/api/rails%2Cemacs%2Cmacos%2Cwindows', '.gitignore'
