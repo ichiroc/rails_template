@@ -21,7 +21,7 @@ end
 gem 'haml-rails'
 gem 'kaminari'
 gem 'simple_form'
-gem 'twitter-bootstrap-rails'
+gem 'bootstrap', '~> 4.0.0.beta'
 
 gem_group :development, :test do
   gem 'annotate'
@@ -51,8 +51,6 @@ end
 run 'bundle install'
 run 'bundle exec guard init'
 
-generate 'bootstrap:install'
-generate 'bootstrap:layout'
 generate 'simple_form:install', '--bootstrap'
 generate 'annotate:install'
 generate 'rspec:install'
@@ -63,6 +61,27 @@ uncomment_lines 'spec/rails_helper.rb', /Dir.*spec\/support\/.*/
 inject_into_file 'spec/rails_helper.rb', before: "\nend\n" do
   "\n  config.include FactoryGirl::Syntax::Methods\n"
 end
+
+# bootstrap
+run 'yarn add jquery'
+scss_file = 'app/assets/stylesheets/application.scss'
+run "mv 'app/assets/stylesheets/application.css' #{scss_file}"
+
+inject_into_file "app/assets/stylesheets/application.scss", after: '*/' do
+  "\n@import 'bootstrap';"
+end
+
+gsub_file(scss_file, /\*= require.*\n/, '')
+
+
+inject_into_file "#{'app/assets/javascripts/application.js'}", before: '//= require_tree .' do
+  <<~JS
+  //= require jquery
+  //= require popper
+  //= require bootstrap-sprockets
+  JS
+end
+
 if has_user
   generate 'devise:install'
   environment %q(config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }), env: 'development'
